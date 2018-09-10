@@ -1,0 +1,45 @@
+<header class="header">
+  <div class="login">
+    <% if current_user %>
+      <%= link_to 'Log Out', session_path, method: :delete, class: "button" %>
+    <% end %>
+    <% if !current_user %>
+     <%= link_to "Sign Up", new_user_path, class: "button" %> 
+     <%= link_to "Login", new_session_path, class: "button" %>
+    <% end %>
+  </div>
+  <div>
+    <h1>Q & A Arena</h1>
+      <p>Your Questions - Answered Here</p>
+  </div>
+</header>
+  <% if flash[:notice] %>
+    <p class="flash-error"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:answer] %>
+<p class="flash-error"><%= flash[:answer] %></p>
+<% end %>
+<div class="container">
+  <div class="question-body">
+    <p><%= @question.body %></p>
+  
+    <p class="created">created by: <%= @question.user.username %><br>
+    created on: <%= @question.created_at.to_formatted_s(:long_ordinal) %>
+    <% end %>  
+  </div>
+<h2>Answers</h2>
+<% @question.answers.each do |answer| %>
+  <div class="answers">
+    <p>
+      <strong></strong>
+      <%= answer.body %>
+    </p>
+    <div class="created">answered by: <%= answer.user.username %></div>
+    <div class="created">answered on: <%= answer.created_at.to_formatted_s(:long_ordinal) %></div>
+  </div>
+  <% end %>
+</div>
+<div class="show-links">
+<%= link_to 'Add an answer', new_answer_path(question_id: @question.id), class: "button" %>
+<%= link_to 'Back', questions_path, class: "button" %>
+</div>
