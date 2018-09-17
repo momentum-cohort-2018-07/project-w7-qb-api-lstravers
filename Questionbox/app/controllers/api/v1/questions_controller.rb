@@ -1,13 +1,22 @@
 class Api::V1::QuestionsController < ApplicationController
-  before_action :verify_authentication
-  before_action :set_username,  only: [:index, :create, :show, :update, :destroy]
+  # before_action :verify_authentication
+  # before_action :set_username,  only: [:index, :create, :show, :update, :destroy]
   before_action :set_question, only: [:show, :update, :destroy]
   
   helper_method :current_username
 
   def index
-    @questions = @username.question
-    render json: @username.questions
+    @questions = Question.all
+    render json: @questions
+  end
+
+  def new
+    if current_username
+      @question = Question.new
+    else
+      flash[:notice] = "You must be logged in to post a question"
+      redirect_to new_api_v1_question_path
+    end
   end
  
   def show
@@ -45,9 +54,9 @@ class Api::V1::QuestionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_username
-      @username = Username.find(params["username_id"])
-    end
+    # def set_username
+    #   # @username = Username.find(params["username_id"])
+    # end
 
     def set_question
       @question= Question.find(params["id"])
