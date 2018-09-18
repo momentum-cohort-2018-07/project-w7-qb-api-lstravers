@@ -1,6 +1,6 @@
 class Api::V1::AnswersController < ApplicationController
 
-  before_action :verify_authentication
+  before_action :verify_authenticity_token
   before_action :set_question,  only: [:index, :create, :show, :update, :destroy]
   before_action :set_answer, only: [:show, :update, :destroy]
   
@@ -13,6 +13,15 @@ class Api::V1::AnswersController < ApplicationController
     render json: @answers
   end
 
+  def new
+    if current_username
+      @answer = Answer.new
+      @question = Question.find(params[:question_id])
+    else
+      flash[:notice] = "You Must be logged in to post an answer."
+    end
+  end
+  
   def create
     @answer = Answer.create(
         commenter: params["commenter"],

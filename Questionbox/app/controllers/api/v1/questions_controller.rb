@@ -15,7 +15,7 @@ class Api::V1::QuestionsController < ApplicationController
       @question = Question.new
     else
       flash[:notice] = "You must be logged in to post a question"
-      redirect_to new_api_v1_question_path
+      redirect_to api_v1_questions_path
     end
   end
  

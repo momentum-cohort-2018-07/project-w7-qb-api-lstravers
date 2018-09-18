@@ -1,0 +1,9 @@
+<%= form_with model: [@question, @answer], local: true do |f| %>
+  <%= f.hidden_field :username_id, value: current_username.id %>
+  <p>
+  <%= f.label :solution %>
+  <%= f.text_area :solution %>
+  </p>
+
+  <%= f.submit %>
+<% end %>
