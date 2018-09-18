@@ -1,5 +1,6 @@
 class Api::V1::UsernamesController < ApplicationController
-  skip_before_action :verify_authentication
+  skip_before_action :verify_authentication, only: [:create]
+  before_action :set_user, only: [:show, :destroy, :update]
 
   def index
     @usernames = Username.all
