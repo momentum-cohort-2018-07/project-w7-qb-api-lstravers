@@ -3,12 +3,12 @@
       <p class="flash-error"><%= flash[:notice] %></p>
     <% end %>
   <div class="login">
-    <% if current_user %>
+    <% if current_username %>
       <%= link_to 'Log Out', session_path, method: :delete, class: "button" %>
 
 <% end %>
-<% if !current_user %>
-<%= link_to "Sign Up", new_user_path, class: "button" %> 
+<% if !current_username %>
+<%= link_to "Sign Up", new_username_path, class: "button" %> 
 <%= link_to "Login", new_session_path, class: "button" %>
 <% end %>
   
@@ -19,7 +19,7 @@
 </header>
 
 <h2>Listing Questions</h2>
-<%= link_to 'New Post', new_post_path, class: "button" %>
+<%= link_to 'New Question', new_question_path, class: "button" %>
 
     <% @questions.each do |question| %>
     <div class="container">
@@ -30,11 +30,11 @@
       </p>
       </div>
       <%= link_to 'Show', question_path(question), class: "button" %>
-      <% if current_user && current_user.id == question.user_id %>
+      <% if current_username && current_username.id == question.username_id %>
       <%= link_to 'Edit', edit_question_path(post), class: "button" %>
       <%= link_to 'Destroy', question_path(question), class: "button",
               method: :delete,
-              data: { confirm: 'Are you sure? All answers will be deleted too' } %>
+              data: { confirm: 'Are you sure? All answers will be deleted too.' } %>
       <% end %>
     
     </div>
