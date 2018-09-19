@@ -1,9 +1,9 @@
-class Api::V1::QuestionsController < ApplicationController
-  # before_action :verify_authentication
-  # before_action :set_username,  only: [:index, :create, :show, :update, :destroy]
+class Api::QuestionsController < ApplicationController
+  before_action :verify_authenticity_token
+  before_action :set_user,  only: [:index, :create, :show, :update, :destroy]
   before_action :set_question, only: [:show, :update, :destroy]
   
-  helper_method :current_username
+  helper_method :current_user
 
   def index
     @questions = Question.all
@@ -11,11 +11,11 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def new
-    if current_username
+    if current_user
       @question = Question.new
     else
       flash[:notice] = "You must be logged in to post a question"
-      redirect_to api_v1_questions_path
+      redirect_to api_questions_path
     end
   end
  
@@ -27,14 +27,14 @@ class Api::V1::QuestionsController < ApplicationController
     vquestion=params["question"]
     if vquestion.length > 1 && vquestion.length < 281
     @question = Question.create(
-        quesion: params["question"],
-        username_id: @username.id
+        question: params["question"],
+        user_id: @user.id
         )
       render json: @question
     else
       render json: { error: "Invalid question" }, status: :unauthorized
+    end
   end
- end
 
   def update
     if @question.update(question_params)
@@ -45,18 +45,18 @@ class Api::V1::QuestionsController < ApplicationController
   end
   
   def destroy
-    if @current_username.id == @username.id
-      @quesion.destroy 
+    if @current_user.id == @user.id
+      @question.destroy 
     else 
       render json: { error: "Invalid Action" }, status: :unauthorized
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    # def set_username
-    #   # @username = Username.find(params["username_id"])
-    # end
+  #Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params["user_id"])
+    end
 
     def set_question
       @question= Question.find(params["id"])
@@ -66,5 +66,4 @@ class Api::V1::QuestionsController < ApplicationController
     def question_params
       params.require(:question).permit(:question)
     end
-
 end

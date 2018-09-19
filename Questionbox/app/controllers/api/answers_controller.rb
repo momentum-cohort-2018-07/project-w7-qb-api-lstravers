@@ -1,4 +1,4 @@
-class Api::V1::AnswersController < ApplicationController
+class Api::AnswersController < ApplicationController
 
   before_action :verify_authenticity_token
   before_action :set_question,  only: [:index, :create, :show, :update, :destroy]
@@ -14,11 +14,11 @@ class Api::V1::AnswersController < ApplicationController
   end
 
   def new
-    if current_username
+    if current_user
       @answer = Answer.new
       @question = Question.find(params[:question_id])
     else
-      flash[:notice] = "You Must be logged in to post an answer."
+      flash[:notice] = "You must be logged in to post an answer."
     end
   end
   
