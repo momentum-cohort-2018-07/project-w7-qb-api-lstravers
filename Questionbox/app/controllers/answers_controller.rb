@@ -14,7 +14,8 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
 
     if @answer.save
-      redirect_to question_path(@answer.quesiton.id)
+      NotifierMailer.notify(@answer.user).deliver_now
+       redirect_to question_path(@answer.question.id)
     else
       redirect_to question_path(@answer.question.id)
       flash[:comment] ="Answer can't be blank."
@@ -25,28 +26,9 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-
-  # def validate
-  #   @quesiton = answer.find(params[:id])  
-  #   respond_to :js, :html
-  #   if current_user   
-  #     if !current_user.liked? @answer
-  #       @answer.liked_by current_user
-  #       redirect_to @answer
-  #     elsif current_user.liked? @answer
-  #       @answer.unliked_by current_user
-  #       redirect_to @answer
-  #      end
-  #   else
-  #     flash[:notice] = 'Only users can validate, Please login'
-  #     redirect_to @answer
-  #   end
-  # end
-
   private
-    #need to add user_id
     def answer_params
-      params.require(:answer).permit(:question_id, :body)
+      params.require(:answer).permit(:question_id, :body, :user_id)
     end
 
 end

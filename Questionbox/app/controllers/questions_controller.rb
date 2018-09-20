@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   def index
-    @questions = Question.all
+    @questions = Question.page(params[:page])
   end
 
   def show
@@ -9,10 +9,10 @@ class QuestionsController < ApplicationController
   end
  
   def new
-    if current_username
+    if current_user
       @question = Question.new
     else
-      flash[:notice] ="You must be logged to post a new question."
+      flash[:notice] ="You must be logged to make a new post."
       redirect_to new_session_path
     end
   end
@@ -27,9 +27,8 @@ class QuestionsController < ApplicationController
     end
   end  
   
-
   def destroy 
-    @quesiton = Question.find(params[:id])
+    @question = Question.find(params[:id])
     if current_user.id == @question.user_id
       @question.destroy
       redirect_to questions_path
@@ -38,11 +37,10 @@ class QuestionsController < ApplicationController
       redirect_to @question
     end
   end
- 
+
   private
   #need to add user_id
     def question_params
-       params.require(:question).permit(:body)
+       params.require(:question).permit(:body, :user_id)
     end
-
 end

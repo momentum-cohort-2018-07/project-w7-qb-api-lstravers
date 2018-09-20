@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
 
-helper_method :current_username
+  helper_method :current_user
 
-  def current_username
-    @current_username ||= Username.find(session[:username_id]) if session[:username_id]
-  end
-
+  protected
+    def current_user
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end 
 end

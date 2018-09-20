@@ -4,18 +4,17 @@
     <div id="error_explanation">
       <h2>
         <%= pluralize(@question.errors.count, "error") %> prohibited
-        this post from being saved:
+        this question from being saved:
       </h2>
       <ul>
         <% @question.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
-    </div>
   <% end %>
  
   <p>
-    <%= form.label :body %><br>
+    <%= form.label :question %><br>
     <%= form.text_area :body %>
   </p>
  
@@ -23,4 +22,6 @@
     <%= form.submit %>
   </p>
  
+  <%= link_to "Show My Questions", user_path(session[:user_id]), class: "button" %>   
+
 <% end %>

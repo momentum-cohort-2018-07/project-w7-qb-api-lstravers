@@ -10,6 +10,31 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+ @import 'bootstrap';
+ @import 'questions';
+ @import 'users';
+ @import 'answers';
+
+  body {
+    background-image: url("parchment.jpeg");
+    background-image: repeat;
+  }
+
+ .question-body {
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.table {
+  border-bottom: 1px solid black;
+}
+
+.heading {
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+}
