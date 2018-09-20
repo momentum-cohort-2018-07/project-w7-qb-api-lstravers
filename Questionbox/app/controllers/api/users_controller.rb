@@ -1,10 +1,15 @@
 class Api::UsersController < ApplicationController
   
-  skip_before_action :verify_authentication, only: [:create], raise: false
+  skip_before_action :verify_authenticity_token, only: [:create], raise: false
   before_action :set_user, only: [:show, :destroy, :update]
 
   def index
     @users = User.all
+    render json: @users
+  end
+
+  def new
+    @users = User.new
     render json: @users
   end
   
