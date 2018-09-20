@@ -22,6 +22,10 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  # def verify_current_user!
+  #   redirect_to login_path unless current_user
+  # end
+
   def show
     @user = @user.id
     render json: @user
