@@ -1,0 +1,22 @@
+<%= form_with model: user, local: true do |form| %>
+
+  <p>
+  <%= form.label :username %>
+  <%= form.text_field :username %>
+  </p>
+  <p>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+
+  <p>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </p>
+  <p>
+  <%= form.label :image %>
+  <%= form.file_field :image %>
+  </p>
+
+
+  <%= form.submit %>
+<% end %>
