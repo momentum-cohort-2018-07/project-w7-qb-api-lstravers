@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   root 'questions#index'
 
   namespace :api do
-    resources :users
-      resources :questions do
-        resources :answers
+    resources :users, only: [:index, :create, :update, :show, :destroy]
+      resources :questions, except: [:new, :update, :edit] do
+        resources :answers, except: [:new, :edit]
       end
       resource :session, only: :create
   end
