@@ -22,22 +22,19 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  # def verify_current_user!
-  #   redirect_to login_path unless current_user
-  # end
-
   def show
     @user = @user.id
     render json: @user
   end
 
   def destroy
-    if api_token_user.id == @user.id
-      @user.destroy
-      render json: {"notice": "User has been deleted."}, status: :accepted
-    else
-      render json: {"error": "You do not have permission to delete this user."}, status: :unprocessable_entity
-    end
+    @user.destroy
+    # if api_token_user.id == @user.id
+    #   @user.destroy
+    #   render json: {"notice": "User has been deleted."}, status: :accepted
+    # else
+    #   render json: {"error": "You do not have permission to delete this user."}, status: :unprocessable_entity
+    # end
   end
 
   def update

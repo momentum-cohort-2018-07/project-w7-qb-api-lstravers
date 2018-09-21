@@ -1,8 +1,9 @@
 class Api::QuestionsController < ApplicationController
-  before_action :verify_authenticity_token
+  
   before_action :set_user,  only: [:index, :create, :show, :update, :destroy]
   before_action :set_question, only: [:show, :update, :destroy]
-  
+  before_action :verify_authenticity_token
+
   helper_method :current_user
 
   def index
