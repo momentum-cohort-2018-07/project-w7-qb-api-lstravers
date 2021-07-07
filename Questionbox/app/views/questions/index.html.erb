@@ -12,26 +12,29 @@
 <%= link_to "Login", new_session_path, class: "button" %>
 <% end %>
   
-<h1>Q & A Arena</h1>   
-<h2><strong>Your Questions - Answered Here</strong></h2>
-   
+<h1 class = "heading">Q & A Arena</h1>   
+<h2 class = "heading">Your Questions - Answered Here</h2>
 </div>
 </header>
 
-<h2>Listing Questions</h2>
-<%= link_to 'New Post', new_post_path, class: "button" %>
+<%= paginate @questions %>
+<%= page_entries_info @questions %>
+
+<%= link_to 'New Question', new_question_path, class: "button" %>
 
     <% @questions.each do |question| %>
+
     <div class="container">
       <div class="question-body">
       <p><%= question.body %></p>
       <p class="created">created by: <%= question.user.username %><br>
         created on: <%= question.created_at.to_formatted_s(:long_ordinal) %>
       </p>
+
       </div>
       <%= link_to 'Show', question_path(question), class: "button" %>
       <% if current_user && current_user.id == question.user_id %>
-      <%= link_to 'Edit', edit_question_path(post), class: "button" %>
+      <%= link_to 'Edit', edit_question_path(question), class: "button" %>
       <%= link_to 'Destroy', question_path(question), class: "button",
               method: :delete,
               data: { confirm: 'Are you sure? All answers will be deleted too' } %>

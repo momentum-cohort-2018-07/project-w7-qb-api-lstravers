@@ -1,0 +1,33 @@
+<%= form_for(@answer) do |form| %>
+  <header class="header">
+      <% if flash[:notice] %>
+        <p class="flash-error"><%= flash[:notice] %></p>
+      <% end %>
+    <div class="login">
+    <% if current_user %>
+      <%= link_to 'Log Out', session_path, method: :delete, class: "button" %>
+    <% end %>
+    <% if !current_user %>
+      <%= link_to "Sign Up", new_user_path, class: "button" %> 
+      <%= link_to "Login", new_session_path, class: "button" %>
+    
+  <% end%>
+    </div>
+    <div>
+      <h1 class = "heading">Q & A Arena</h1>
+        <p>Your Questions - Answered Here</p>
+    </div>
+  </header>
+  <h1>Enter Answer</h1>
+  <%= form_with model: @answer, local: true do |form| %>
+    <div>
+        <%= form.text_area :body, class:'answer-area' %>
+    </div>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :question_id, value: @question.id %>
+  <p>
+    <%= form.submit "Submit", class:"button" %>
+  </p>
+  <% end %>
+  <%= link_to "Back", question_path(@question), class:"button" %>
+<% end %>

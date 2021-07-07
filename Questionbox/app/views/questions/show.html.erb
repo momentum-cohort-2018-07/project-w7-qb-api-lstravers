@@ -11,6 +11,7 @@
   <div>
     <h1>Q & A Arena</h1>
       <p>Your Questions - Answered Here</p>
+      <%= link_to "Show My Questions", user_path(session[:user_id]), class: "button" %>
   </div>
 </header>
   <% if flash[:notice] %>
@@ -25,7 +26,7 @@
   
     <p class="created">created by: <%= @question.user.username %><br>
     created on: <%= @question.created_at.to_formatted_s(:long_ordinal) %>
-    <% end %>  
+    
   </div>
 <h2>Answers</h2>
 <% @question.answers.each do |answer| %>
@@ -34,11 +35,14 @@
       <strong></strong>
       <%= answer.body %>
     </p>
-    <div class="created">answered by: <%= answer.user.username %></div>
-    <div class="created">answered on: <%= answer.created_at.to_formatted_s(:long_ordinal) %></div>
+    <div class="created">answered by: <%= answer.user.username %>
+    </div>
+    <div class="created">answered on: <%= answer.created_at.to_formatted_s(:long_ordinal)   %>
+    </div>
   </div>
   <% end %>
-</div>
+<div>
+
 <div class="show-links">
 <%= link_to 'Add an answer', new_answer_path(question_id: @question.id), class: "button" %>
 <%= link_to 'Back', questions_path, class: "button" %>
